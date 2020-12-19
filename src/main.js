@@ -17,6 +17,11 @@ Vue.use(ElementUI);
 
 Vue.prototype.$axios = axios;
 
+// 引入echarts
+// import echarts from 'echarts' //引入echarts
+// Vue.prototype.$echarts = echarts //引入组件
+
+
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
     next()
