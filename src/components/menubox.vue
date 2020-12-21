@@ -23,9 +23,13 @@
         <i class="el-icon-s-check"></i>
         <span slot="title">人事数据分析</span>
       </el-menu-item>
-            <el-menu-item index="5">
+      <el-menu-item index="5">
         <i class="el-icon-upload"></i>
         <span slot="title">外部数据导入</span>
+      </el-menu-item>
+      <el-menu-item index="6">
+        <i class="el-icon-s-management"></i>
+        <span slot="title">数据导入管理</span>
       </el-menu-item>
     </el-menu>
   </div>

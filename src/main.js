@@ -24,7 +24,11 @@ Vue.prototype.$axios = axios;
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
-    next()
+    if (!cookieData("get", "token")) {
+      next()
+    } else {
+      next("/");
+    }
   } else {
     if (cookieData("get", "token")) {
       next()
