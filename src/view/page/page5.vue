@@ -7,10 +7,11 @@
     </el-radio-group>
     <el-divider></el-divider>
     <div class="export-form">
-      <el-form ref="form" :model="form" label-width="100px" >
+      <el-form ref="form" label-width="100px" >
         <el-form-item label="导入模板下载">
           <!-- <el-input v-model="form.name"></el-input> -->
-          <span>客户数据导入模板.xlsx</span>
+          <a href="../../../static/test.xlsx">客户数据导入模板.xlsx</a>
+          <!-- <span @click="downTemXlsx">客户数据导入模板.xlsx</span> -->
         </el-form-item>
         <el-form-item label="导入人">
           <span>周杰伦</span>
@@ -19,7 +20,8 @@
           <span>2020.12.19 21:58</span>
         </el-form-item>
         <el-form-item label="选择文件">
-          <span>文件</span>
+          <!-- <span>文件</span> -->
+          <vue-xlsx-table @on-select-file="handleSelectedFile">选择文件</vue-xlsx-table>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">导入到系统</el-button>
@@ -34,18 +36,20 @@ export default {
   data() {
     return {
       tabPosition: "0",
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
     };
   },
+  methods:{
+    handleSelectedFile(data){
+      console.log(data)
+    },
+    downTemXlsx(){
+      Window.loaction.href = "../../static/test.xlsx"
+    },
+    onSubmit(){
+
+    }
+
+  }
 };
 </script>
 
