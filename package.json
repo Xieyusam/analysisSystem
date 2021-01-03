@@ -14,7 +14,8 @@
     "echarts": "^4.9.0",
     "element-ui": "^2.14.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-xlsx-table": "^1.2.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

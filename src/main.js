@@ -20,11 +20,16 @@ Vue.prototype.$axios = axios;
 // 引入echarts
 // import echarts from 'echarts' //引入echarts
 // Vue.prototype.$echarts = echarts //引入组件
-
+import vueXlsxTable from 'vue-xlsx-table'
+Vue.use(vueXlsxTable, {rABS: false})
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
-    next()
+    if (!cookieData("get", "token")) {
+      next()
+    } else {
+      next("/");
+    }
   } else {
     if (cookieData("get", "token")) {
       next()

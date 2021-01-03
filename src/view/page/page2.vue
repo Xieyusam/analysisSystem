@@ -193,7 +193,7 @@ export default {
 <style>
 .pageBox {
   width: 100%;
-  min-height: 600px;
+  min-height: 300px;
 }
 .box-card {
   width: 98%;
