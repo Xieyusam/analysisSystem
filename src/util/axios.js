@@ -16,7 +16,7 @@ axios.interceptors.request.use(
   function (config) {
     // 查找cookie有没有token ，有则添加token请求头
     if (cookieData("get", "token")) {
-      config.headers.token = cookieData("get", "token");
+      config.headers.authorization = cookieData("get", "token");
     }
     return config;
   },
@@ -28,32 +28,25 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   function (response) {
-    if (response.data.status == 401) {
-      Message.error({
-        background: true,
-        content: "登录过期",
-        duration: 10,
-        closable: true
+    // console.log(response,'response')
+    if (response.data.code == 401) {
+      this.$message({
+        showClose: true,
+        message: '登录过期',
+        type: 'warning'
       });
       cookieData("clean", "token"); // 清除token
-      window.location.replace("http://aiot.ctjt.cn/#/login"); // 重定向路由地址
+      window.location.replace("http://localhost:8080/#/login"); // 重定向路由地址
     }
-
-    if (response.data.status == 500) {
-      Message.error({
-        background: true,
-        content: response.data.msg,
-        duration: 10,
-        closable: true
-      });
-    }
+    // if (response.data.code == 500) {
+    //   this.$message({
+    //     showClose: true,
+    //     message: '',
+    //     type: 'warning'
+    //   });
+    // }
     return response.data;
   },
-
-  function (error) {
-    MessageTip.instance(error.response.status);
-    return Promise.reject(error);
-  }
 );
 
 //get请求
@@ -66,9 +59,9 @@ export default {
           params: param
         })
         .then(res => {
-          if (res.status == 200 || res.status == 403) {
+          if (res.code == 200 || res.code == 403) {
             resolve(res);
-          } else if (res.status != 401 && res.status < 500) {
+          } else if (res.code != 401 && res.code < 500) {
             reject(res);
             // Message.error({
             //   background: true,
@@ -81,20 +74,24 @@ export default {
               message: res.msg,
               type: 'error'
             });
-          } else if (res.status >= 500) {
+          } else if (res.code >= 500) {
             reject(res);
           } else {
             resolve(res);
           }
         })
         .catch(error => {
-          Message.error({
-            background: true,
-            content: "网络错误",
-            duration: 10,
-            closable: true
+          // Message.error({
+          //   background: true,
+          //   content: "网络错误",
+          //   duration: 10,
+          //   closable: true
+          // });
+          this.$message({
+            showClose: true,
+            message: '网络错误',
+            type: 'error'
           });
-
           reject(error);
         });
     });
@@ -111,14 +108,19 @@ export default {
           }
         })
         .then(res => {
-          if (res.status == 200) {
+          if (res.code == 200) {
             resolve(res);
-          } else if (res.status != 500) {
-            Message.error({
-              background: true,
-              content: res.msg,
-              duration: 10,
-              closable: true
+          } else if (res.code != 500) {
+            // Message.error({
+            //   background: true,
+            //   content: res.msg,
+            //   duration: 10,
+            //   closable: true
+            // });
+            this.$message({
+              showClose: true,
+              message: res.msg,
+              type: 'error'
             });
             reject(res);
           } else {
