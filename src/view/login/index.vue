@@ -62,22 +62,22 @@ export default {
         phone: this.phone,
         password: this.password,
       };
-      // UserLogin(parems)
-      //   .then((res) => {
-      //     if (res.code == 200) {
-      //       this.$message({
-      //         message: "登录成功",
-      //         type: "success",
-      //       });
-      //       cookieData("set", "token", res.data.token, 1); // 将token 存在cookie,  1天后过期
-      //       localData("set", 'userinfo' , res.data.user)
-      //       this.$router.push({path:"/"})
-      //     }
-      //   })
-      //   .catch((err) => {});
-                    cookieData("set", "token", '123', 1); // 将token 存在cookie,  1天后过期
-            localData("set", 'userinfo' , '123')
+      UserLogin(parems)
+        .then((res) => {
+          if (res.code == 200) {
+            this.$message({
+              message: "登录成功",
+              type: "success",
+            });
+            cookieData("set", "token", res.data.token, 1); // 将token 存在cookie,  1天后过期
+            localData("set", 'userinfo' , res.data.user)
             this.$router.push({path:"/"})
+          }
+        })
+        .catch((err) => {});
+            //         cookieData("set", "token", '123', 1); // 将token 存在cookie,  1天后过期
+            // localData("set", 'userinfo' , '123')
+            // this.$router.push({path:"/"})
 
     },
   },

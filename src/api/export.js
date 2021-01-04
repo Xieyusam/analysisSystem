@@ -4,7 +4,7 @@ export function newMoreStaff(param) {
     //  登录
     return new Promise((resolve, reject) => {
       axios
-        .post("/api/staff/newMore",param)
+        .post("/api/staff/newMore", param)
         .then(res => {
           if (res.code == 200) {
             resolve(res);

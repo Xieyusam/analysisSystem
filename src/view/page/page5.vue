@@ -42,6 +42,7 @@
 
 <script>
 import { localData } from "@/util/local";
+import { newMoreStaff } from "@/api/export";
 export default {
   data() {
     return {
@@ -121,11 +122,11 @@ export default {
         const newValue = {
           name:item.员工姓名,
           sex :item.性别 == '男' ? 0 : 1,
-          birthday:this.timeStamp(item.出生日期) ,
+          birthday:this.timeStamp(item.出生日期).toString() ,
           home:item.户籍,
           department:item.部门 ,
           salary:item.工资 ,
-          initday:this.timeStamp(item.入职日期)
+          initday:this.timeStamp(item.入职日期).toString()
         }
         return newValue
       })
@@ -134,7 +135,31 @@ export default {
       console.log(this.newdata)
     },
     onSubmit(){
-
+      if(this.tabPosition == '2') {
+        const data = {
+          userId:localData('get','userinfo').id,
+          userName:localData('get','userinfo').name,
+          type:2,
+          recordCount: this.dataCount,
+          staffs:this.newdata
+        }
+        newMoreStaff(data).then(res =>{
+          console.log(res)
+          if(res.code == 200){
+            this.$message({
+              message: "添加成功",
+              type: "success",
+            });
+          }else{
+            this.$message({
+              message: "添加失败，请联系管理员",
+              type: "error",
+            });
+          }
+          this.reset()
+        })
+      }
+      
     },
     // 重置
     reset() {
