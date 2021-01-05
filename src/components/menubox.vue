@@ -31,6 +31,10 @@
         <i class="el-icon-s-management"></i>
         <span slot="title">数据导入管理</span>
       </el-menu-item>
+      <el-menu-item index="7">
+        <i class="el-icon-s-management"></i>
+        <span slot="title">用户管理</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

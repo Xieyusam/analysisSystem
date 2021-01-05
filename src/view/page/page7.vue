@@ -1,21 +1,17 @@
 <template>
   <div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="user_name" label="导入人" width="180">
+      <el-table-column prop="name" label="名字" width="180"> </el-table-column>
+      <el-table-column prop="phone" label="手机号" width="180">
       </el-table-column>
-      <el-table-column prop="type" label="数据类型" width="180">
-                <template slot-scope="scope">
-          <span style="margin-left: 10px">{{
-            scope.row.type | typeChange
-          }}</span>
+      <el-table-column prop="role" label="角色">
+        <template slot-scope="scope">
+          <span>{{ scope.row.role | roleChange }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="record_count" label="条数"> </el-table-column>
-      <el-table-column prop="created_date" label="导入时间">
+      <el-table-column prop="created_date" label="创建时间">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{
-            scope.row.created_date | timeStamp
-          }}</span>
+          <span>{{ scope.row.created_date | timeStamp }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -33,7 +29,7 @@
 </template>
 
 <script>
-import { AllRecord } from "@/api/record";
+import { AllUser } from "@/api/user";
 import { dateFormat } from "@/util/common";
 export default {
   data() {
@@ -42,8 +38,8 @@ export default {
     };
   },
   filters: {
-    typeChange(value){
-      return value == 0 ? '客户' : value == 1 ? '产品' : '人事'
+    roleChange(value) {
+      return value == 0 ? "用户" : value == 1 ? "管理员" : "超级管理员";
     },
     timeStamp(value) {
       const time = new Date(value);
@@ -51,14 +47,14 @@ export default {
     },
   },
   mounted() {
-    this.getAllRecord();
+    this.getAllUser();
   },
   methods: {
-    getAllRecord() {
-      AllRecord().then((res) => {
+    getAllUser() {
+      AllUser().then((res) => {
         console.log(res);
         if (res.code == 200) {
-          this.tableData = res.data.records;
+          this.tableData = res.data.users;
         }
       });
     },

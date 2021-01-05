@@ -22,7 +22,6 @@ export function UserLogin(param) {
 }
 
 export function AllUser() {
-  //  登录
   return new Promise((resolve, reject) => {
     axios
       .get("/api/AllUser")

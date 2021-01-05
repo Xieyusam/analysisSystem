@@ -42,7 +42,7 @@
 
 <script>
 import { localData } from "@/util/local";
-import { newMoreStaff } from "@/api/export";
+import { newMoreStaff, newMoreProduct ,newMoreCustomer } from "@/api/export";
 export default {
   data() {
     return {
@@ -88,10 +88,10 @@ export default {
         const newValue = {
           name:item.客户名称,
           industry:item.行业,
-          register_year:parseInt(item.公司注册年份) ,
-          register_capital:parseInt(item.公司注册资金),
-          start_date:this.timeStamp(item.开始合作时间),
-          over_date:item.停止合作时间 ? this.timeStamp(item.停止合作时间) : null
+          registerYear:parseInt(item.公司注册年份) ,
+          registerCapital:parseInt(item.公司注册资金),
+          startDate:this.timeStamp(item.开始合作时间).toString(),
+          overDate:item.停止合作时间 ? this.timeStamp(item.停止合作时间).toString() : null
         }
         return newValue
       })
@@ -104,7 +104,7 @@ export default {
         this.newdata = data.map(item =>{
         const newValue = {
           name:item.产品名称,
-          trans_date :this.timeStamp(item.产品交易日期),
+          transDate :this.timeStamp(item.产品交易日期).toString(),
           type:item.产品类型 ,
           amount:item.产品交易金额,
           cout:item.产品交易数量,
@@ -134,7 +134,56 @@ export default {
       this.result = '解析成功'
       console.log(this.newdata)
     },
-    onSubmit(){
+    // 确认添加
+    onSubmit() {
+      if(this.tabPosition == '0') {
+        const data = {
+          userId:localData('get','userinfo').id,
+          userName:localData('get','userinfo').name,
+          type:0,
+          recordCount: this.dataCount,
+          customers:this.newdata
+        }
+        newMoreCustomer(data).then(res =>{
+          console.log(res)
+          if(res.code == 200){
+            this.$message({
+              message: "添加成功",
+              type: "success",
+            });
+          }else{
+            this.$message({
+              message: "添加失败，请联系管理员",
+              type: "error",
+            });
+          }
+          this.reset()
+        })
+      }
+      if(this.tabPosition == '1') {
+        const data = {
+          userId:localData('get','userinfo').id,
+          userName:localData('get','userinfo').name,
+          type:1,
+          recordCount: this.dataCount,
+          products:this.newdata
+        }
+        newMoreProduct(data).then(res =>{
+          console.log(res)
+          if(res.code == 200){
+            this.$message({
+              message: "添加成功",
+              type: "success",
+            });
+          }else{
+            this.$message({
+              message: "添加失败，请联系管理员",
+              type: "error",
+            });
+          }
+          this.reset()
+        })
+      }
       if(this.tabPosition == '2') {
         const data = {
           userId:localData('get','userinfo').id,
