@@ -1,11 +1,8 @@
 <template>
   <div class="pageBox">
-    <!-- <el-card class="box-card">
-    </el-card> -->
+    <el-card class="box-card"> </el-card>
 
     <el-divider content-position="left">企业客户行业类型分析</el-divider>
-        <el-card class="box-card">
-    </el-card>
 
     <div class="charts-box">
       <div class="charts-inner">
@@ -21,8 +18,6 @@
     </div>
 
     <el-divider content-position="left">企业客户公司规模分析</el-divider>
-           <el-card class="box-card">
-    </el-card>
     <div class="charts-box">
       <div class="charts-inner">
         <div id="myChart2" style="width: 100%; height: 100%"></div>
@@ -37,8 +32,6 @@
     </div>
 
     <el-divider content-position="left">企业客户数量变化分析</el-divider>
-           <el-card class="box-card">
-    </el-card>
     <div class="charts-box">
       <div class="charts-inner">
         <div id="myChart3" style="width: 100%; height: 100%"></div>
@@ -90,7 +83,6 @@ export default {
   mounted() {
     this.drawLine();
     this.drawLine2();
-
   },
   methods: {
     drawLine() {
