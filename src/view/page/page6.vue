@@ -126,9 +126,15 @@
       <el-table-column prop="home" align="center" label="籍贯"> </el-table-column>
       <el-table-column prop="department" align="center" label="部门"> </el-table-column>
       <el-table-column prop="salary" align="center" label="工资"> </el-table-column>
-      <el-table-column prop="initday" align="center" label="交易日期">
+      <el-table-column prop="initday" align="center" label="入职日期">
         <template slot-scope="scope">
           <span>{{ parseInt(scope.row.initday) | timeStampYmd }}</span>
+        </template>
+      </el-table-column>
+            <el-table-column prop="overday" align="center" label="离职日期">
+        <template slot-scope="scope">
+          <span v-show="scope.row.overday">{{ parseInt(scope.row.overday) | timeStampYmd }}</span>
+          <span v-show="!scope.row.overday">在职</span>
         </template>
       </el-table-column>
       <el-table-column prop="created_date" align="center" label="导入时间">

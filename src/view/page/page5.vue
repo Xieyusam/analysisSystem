@@ -126,7 +126,8 @@ export default {
           home:item.户籍,
           department:item.部门 ,
           salary:item.工资 ,
-          initday:this.timeStamp(item.入职日期).toString()
+          initday:this.timeStamp(item.入职日期).toString(),
+          overday: item.离职日期 ? this.timeStamp(item.离职日期).toString() : null
         }
         return newValue
       })
