@@ -1,51 +1,24 @@
 <template>
   <div class="pageBox">
-    <el-card class="box-card"> </el-card>
-
-    <el-divider content-position="left">企业客户行业类型分析</el-divider>
-
-    <div class="charts-box">
-      <div class="charts-inner">
-        <div id="myChart" style="width: 100%; height: 100%"></div>
-      </div>
-      <div class="res-inner">
-        分析结果：<br />
-        2019-2020年，湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-      </div>
+  <div class="box-card">
+      <div class="card-child">客户总数6{{  }}</div>
+      <div class="card-child">本月新增客户6{{  }}</div>
+      <div class="card-child">本年新增客户6{{  }}</div>
+      <div class="card-child">本年流失客户6{{  }}</div>
     </div>
-
-    <el-divider content-position="left">企业客户公司规模分析</el-divider>
-    <div class="charts-box">
-      <div class="charts-inner">
-        <div id="myChart2" style="width: 100%; height: 100%"></div>
-      </div>
-      <div class="res-inner">
-        分析结果：<br />
-        2019-2020年，湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-      </div>
-    </div>
-
-    <el-divider content-position="left">企业客户数量变化分析</el-divider>
-    <div class="charts-box">
-      <div class="charts-inner">
-        <div id="myChart3" style="width: 100%; height: 100%"></div>
-      </div>
-      <div class="res-inner">
-        分析结果：<br />
-        2019-2020年，湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-        湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人湖人
-      </div>
-    </div>
-
-    <el-divider></el-divider>
+        <el-divider content-position="left"
+      >各类产品年度交易数量与金额柱状图</el-divider
+    >
+    <div id="typeYearChart" style="width: 600px; height: 350px"></div>
+    <el-divider content-position="left"
+      >单一产品的年度交易数量与金额柱状图</el-divider
+    >
+    <div id="nameYearChart" style="width: 600px; height: 350px"></div>
+    <el-divider content-position="left"
+      >2020年每月产品订单与金额折线图</el-divider
+    >
+    <div id="YearOrderChart" style="width: 600px; height: 350px"></div>
+  </div>
   </div>
 </template>
 
@@ -80,81 +53,8 @@ export default {
       value1: "",
     };
   },
-  mounted() {
-    this.drawLine();
-    this.drawLine2();
-  },
-  methods: {
-    drawLine() {
-      var echarts = require("echarts");
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("myChart"));
-      // 绘制图表
-      myChart.setOption({
-        title: {
-          // text: "ECharts 入门示例",
-        },
-        tooltip: {},
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "销量",
-            type: "bar",
-            data: [5, 20, 36, 10, 10, 20],
-          },
-        ],
-      });
-    },
-    drawLine2() {
-      var echarts = require("echarts");
-      // 基于准备好的dom，初始化echarts实例
-      var myChart2 = echarts.init(document.getElementById("myChart2"));
-      // 绘制图表
-      myChart2.setOption({
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)",
-        },
-        legend: {
-          orient: "vertical",
-          left: 10,
-          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"],
-        },
-        series: [
-          {
-            name: "访问来源",
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "30",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
-            },
-            data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 234, name: "联盟广告" },
-              { value: 135, name: "视频广告" },
-              { value: 1548, name: "搜索引擎" },
-            ],
-          },
-        ],
-      });
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 
@@ -166,18 +66,12 @@ export default {
 .box-card {
   width: 98%;
   margin: auto;
-}
-.charts-box {
   display: flex;
-  width: 100%;
-  height: 300px;
+  flex-direction: row;
+  justify-content: space-around;
 }
-.charts-inner {
-  width: 70%;
-  height: 100%;
-}
-.res-inner {
-  width: 30%;
-  height: 100%;
+.card-child {
+  width: 25%;
+  text-align: center;
 }
 </style>
