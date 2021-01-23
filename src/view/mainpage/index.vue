@@ -5,9 +5,9 @@
         <headerbox></headerbox>
       </el-header>
       <el-container class="containerbox">
-        <el-aside width="160px">
+        <!-- <el-aside width="160px">
           <menubox></menubox>
-        </el-aside>
+        </el-aside> -->
         <el-container>
           <el-main>
             <router-view />
@@ -62,6 +62,7 @@ export default {
   /* text-align: center; */
   height: 100%;
   /* line-height: 160px; */
+  padding: 40px;
 }
 .containerbox {
   height: calc(100vh - 60px);

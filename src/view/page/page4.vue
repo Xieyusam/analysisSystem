@@ -1,29 +1,29 @@
 <template>
   <div class="pageBox">
     <div class="box-card">
-      <div class="card-child">在职人数{{ onlineCout }}</div>
-      <div class="card-child">部门总数{{ departmentCout }}</div>
-      <div class="card-child">本月入职{{ nowMonthOnlineCout }}</div>
-      <div class="card-child">本月离职{{ nowMonthOverCout }}</div>
+      <div class="card-child">在职人数<div class="num-card">{{ onlineCout }}</div></div>
+      <div class="card-child">部门总数<div class="num-card">{{ departmentCout }}</div></div>
+      <div class="card-child">本月入职<div class="num-card">{{ nowMonthOnlineCout }}</div></div>
+      <div class="card-child">本月离职<div class="num-card">{{ nowMonthOverCout }}</div></div>
     </div>
-    <el-divider content-position="left">各年龄段员工占比</el-divider>
-    <div id="AgeChart" style="width: 600px; height: 150px"></div>
-    <div style="width: 600px;">{{ageTextResult}}</div>
-    <el-divider content-position="left">员工工资水平占比</el-divider>
-    <div id="SalaryChart" style="width: 600px; height: 150px"></div>
-    <div style="width: 600px;">{{SalaryTextResult}}</div>
-    <el-divider content-position="left">员工性别占比</el-divider>
-    <div id="SexChart" style="width: 600px; height: 150px"></div>
-    <div style="width: 600px;">{{SexTextResult}}</div>
-    <el-divider content-position="left">员工工龄占比</el-divider>
-    <div id="WorkAgeChart" style="width: 600px; height: 150px"></div>
-    <div style="width: 600px;">{{WorkAgeTextResult}}</div>
-    <el-divider content-position="left">员工户籍柱状图</el-divider>
-    <div id="HomeChart" style="width: 600px; height: 350px"></div>
-    <div style="width: 600px;">{{HomeTextResult}}</div>
-    <el-divider content-position="left">各部门员工数量柱状图</el-divider>
-    <div id="DepartmentChart" style="width: 600px; height: 350px"></div>
-    <div style="width: 600px;">{{DepartmentTextResult}}</div>
+    <div class="line"><div class="line-title">各年龄段员工占比</div></div>
+    <div id="AgeChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{ageTextResult}}</div>
+    <div class="line"><div class="line-title">员工工资水平占比</div></div>
+    <div id="SalaryChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{SalaryTextResult}}</div>
+    <div class="line"><div class="line-title">员工性别占比</div></div>
+    <div id="SexChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{SexTextResult}}</div>
+    <div class="line"><div class="line-title">员工工龄占比</div></div>
+    <div id="WorkAgeChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{WorkAgeTextResult}}</div>
+    <div class="line"><div class="line-title">员工户籍柱状图</div></div>
+    <div id="HomeChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{HomeTextResult}}</div>
+    <div class="line"><div class="line-title">各部门员工数量柱状图</div></div>
+    <div id="DepartmentChart" style="width: 50vw; height: 17vw;"></div>
+    <div style="width: 50vw;">{{DepartmentTextResult}}</div>
 
   </div>
 </template>
@@ -332,7 +332,6 @@ export default {
       // 绘制图表
       HomeChart.setOption({
         title: {
-          // text: "ECharts 入门示例",
         },
         tooltip: {},
         xAxis: {
@@ -486,20 +485,57 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .pageBox {
   width: 100%;
   min-height: 300px;
 }
 .box-card {
-  width: 98%;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
 .card-child {
-  width: 25%;
+  width: 13vw;
+  height: 2.4vw;
   text-align: center;
+  border-top-right-radius: 50em;
+  border-bottom-right-radius: 50em;
+  font-size: 1vw;
+  border-left: 4px solid #545c64;
+  background-color: #545c641a;
+  line-height: 2.4vw;
+  padding: 6px 6px 6px 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.num-card {
+  height: 100%;
+  padding: 0 10px;
+  min-width: 1.4vw;
+  border-radius: 50em;
+  color: #ffffff;
+  background-color: #545c64;
+}
+.line {
+  border-top: 1px solid #545c64;
+  min-height: 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+.line-title {
+  color: #ffffff;
+  /* border-left:1px solid #545c64 ; */
+  background-color: #545c64;
+  border-bottom-right-radius: 20px;
+  min-width: 20px;
+  padding: 4px 20px 4px 4px;
+  margin-top: -1px;
 }
 </style>

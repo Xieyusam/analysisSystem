@@ -56,6 +56,12 @@
           <span>{{ parseInt(scope.row.start_date) | timeStampYmd }}</span>
         </template>
       </el-table-column>
+            <el-table-column prop="over_date" align="center" label="结束合作日期">
+        <template slot-scope="scope">
+          <span v-if="scope.row.over_date">{{ parseInt(scope.row.over_date) | timeStampYmd }}</span>
+          <span v-if="!scope.row.over_date">未结束合作关系</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="created_date" align="center" label="导入时间">
         <template slot-scope="scope">
           <span>{{ scope.row.created_date | timeStamp }}</span>

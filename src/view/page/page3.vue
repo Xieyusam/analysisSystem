@@ -1,24 +1,18 @@
 <template>
   <div class="pageBox">
     <div class="box-card">
-      <div class="card-child">商品总数{{ productNameCount }}</div>
-      <div class="card-child">商品类别{{ productTypeCount }}</div>
-      <div class="card-child">本月产品订单{{ productsMonth }}</div>
-      <div class="card-child">年度产品订单{{ productsYear }}</div>
-      <div class="card-child">本月订单总额{{ MonthMoney }}</div>
-      <div class="card-child">年度订单总额{{ YearMoney }}</div>
+      <div class="card-child">商品总数<div class="num-card">{{ productNameCount }}</div></div>
+      <div class="card-child">商品类别<div class="num-card">{{ productTypeCount }}</div></div>
+      <div class="card-child">本月产品订单<div class="num-card">{{ productsMonth }}</div></div>
+      <div class="card-child">年度产品订单<div class="num-card">{{ productsYear }}</div></div>
+      <div class="card-child">本月订单总额<div class="num-card">{{ MonthMoney }}</div></div>
+      <div class="card-child">年度订单总额<div class="num-card">{{ YearMoney }}</div></div>
     </div>
-    <el-divider content-position="left"
-      >各类产品年度交易数量与金额柱状图</el-divider
-    >
+    <div class="line"><div class="line-title">各类产品年度交易数量与金额柱状图</div></div>
     <div id="typeYearChart" style="width: 600px; height: 350px"></div>
-    <el-divider content-position="left"
-      >单一产品的年度交易数量与金额柱状图</el-divider
-    >
+   <div class="line"><div class="line-title">单一产品的年度交易数量与金额柱状图</div></div>
     <div id="nameYearChart" style="width: 600px; height: 350px"></div>
-    <el-divider content-position="left"
-      >2020年每月产品订单与金额折线图</el-divider
-    >
+    <div class="line"><div class="line-title">2020年每月产品订单与金额折线图</div></div>
     <div id="YearOrderChart" style="width: 600px; height: 350px"></div>
   </div>
 </template>
@@ -441,20 +435,57 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .pageBox {
   width: 100%;
   min-height: 300px;
 }
 .box-card {
-  width: 98%;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
 .card-child {
-  width: 25%;
+  width: 13vw;
+  height: 2.4vw;
   text-align: center;
+  border-top-right-radius: 50em;
+  border-bottom-right-radius: 50em;
+  font-size: 1vw;
+  border-left: 4px solid #545c64;
+  background-color: #545c641a;
+  line-height: 2.4vw;
+  padding: 6px 6px 6px 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.num-card {
+  height: 100%;
+  padding: 0 10px;
+  min-width: 1.4vw;
+  border-radius: 50em;
+  color: #ffffff;
+  background-color: #545c64;
+}
+.line {
+  border-top: 1px solid #545c64;
+  min-height: 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+.line-title {
+  color: #ffffff;
+  /* border-left:1px solid #545c64 ; */
+  background-color: #545c64;
+  border-bottom-right-radius: 20px;
+  min-width: 20px;
+  padding: 4px 20px 4px 4px;
+  margin-top: -1px;
 }
 </style>
