@@ -16,6 +16,7 @@ import './style/theme/index.css';
 Vue.use(ElementUI);
 
 Vue.prototype.$axios = axios;
+import './style/iconfont/iconfont.css'
 
 // 引入echarts
 // import echarts from 'echarts' //引入echarts

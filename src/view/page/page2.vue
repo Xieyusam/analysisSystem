@@ -28,20 +28,91 @@
         <div class="num-card">{{ OverDateYear }}</div>
       </div>
     </div>
-    <div class="line"><div class="line-title">客户公司行业类型占比</div></div>
-
-    <div id="typeChart" style="width: 600px; height: 350px"></div>
-    <div class="line"><div class="line-title">客户公司规模占比</div></div>
-
-    <div id="capitalChart" style="width: 600px; height: 350px"></div>
-    <div class="line"><div class="line-title">客户公司注册年限占比</div></div>
-
-    <div id="yearChart" style="width: 600px; height: 350px"></div>
-    <div class="line">
-      <div class="line-title">2020年客户公司数量变化折线图</div>
+    <div class="line"><div class="line-title">{{typeChartValue}}客户公司行业类型占比</div></div>
+    <div class="Chart-box">
+      <div id="typeChart" style="width: 50vw; height: 28vw"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="filterBox">
+          <el-select
+            v-model="typeChartValue"
+            @change="typeDataYearChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{typeResult}}</div>
+      </div>
+    </div>
+    <div class="line"><div class="line-title">{{capitalChartValue}}客户公司规模占比</div></div>
+    <div class="Chart-box">
+      <div id="capitalChart" style="width: 50vw; height: 28vw"></div>
+        <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="filterBox">
+          <el-select
+            v-model="capitalChartValue"
+            @change="capitalDataYearChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{capitalResult}}</div>
+      </div>
     </div>
 
-    <div id="numChart" style="width: 600px; height: 350px"></div>
+    <div class="line"><div class="line-title">客户公司注册年限占比</div></div>
+    <div class="Chart-box">
+      <div id="yearChart" style="width: 50vw; height: 28vw"></div>
+
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{yearResult}}</div>
+      </div>
+    </div>
+    <div class="line">
+      <div class="line-title">{{numChartValue}}年客户公司数量变化折线图</div>
+    </div>
+    <div class="Chart-box">
+      <div id="numChart" style="width: 50vw; height: 28vw"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="filterBox">
+          <el-select
+            v-model="numChartValue"
+            @change="numDataYearChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{numResult}}</div>
+      </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,6 +152,14 @@ export default {
         "2013",
         "2012",
       ],
+      typeChartValue: "2021",
+      typeResult:"正在分析...",
+      capitalChartValue: "2021",
+      capitalResult:"正在分析...",
+      yearResult:"正在分析...",
+      numChartValue: "2021",
+      numResult:"正在分析...",
+
     };
   },
   mounted() {
@@ -117,10 +196,10 @@ export default {
           this.customerOver = this.customerDataTimeChange.filter(
             (item) => item.over_date != null
           );
-          this.typeData(this.customerOnline, this.customerIndustryArry);
-          this.capitalData(this.customerOnline);
+          this.typeData(this.customerOnline, this.customerIndustryArry, "2021");
+          this.capitalData(this.customerOnline,"2021");
           this.yearData(this.customerOnline, 2021); //默认2021
-          this.numData(this.customerOnline, this.customerOver, this.Year[0]);
+          this.numData(this.customerOnline, this.customerOver, "2021");
         }
       });
     },
@@ -140,9 +219,32 @@ export default {
       this.startDateYear = getCurrentDateCont(startDateArr, "YYYY");
       this.OverDateYear = getCurrentDateCont(OverDateArr, "YYYY");
     },
+    typeDataYearChange() {
+      this.typeData(
+        this.customerOnline,
+        this.customerIndustryArry,
+        this.typeChartValue
+      );
+    },
+    capitalDataYearChange(){
+      this.capitalData(this.customerOnline,this.capitalChartValue);
+    },
+    numDataYearChange(){
+      this.numData(this.customerOnline, this.customerOver,this.numChartValue);
+    },
     typeData(online, type, year) {
       const typeArry = type;
-      const onlineData = online;
+      let onlineData = online;
+      const yearFilter = year;
+      //过滤年份
+      onlineData = onlineData.map((item) => {
+        item.yearFilter = parseInt(item.start_date.split("-")[0]);
+        return item;
+      });
+      onlineData = onlineData.filter(
+        (item2) => item2.yearFilter <= parseInt(yearFilter)
+      );
+      //处理数据
       let numArray = [];
       typeArry.forEach((item) => {
         const length = onlineData.filter((item2) => item2.industry == item)
@@ -151,6 +253,19 @@ export default {
       });
       console.log(typeArry, numArray);
       this.typeChart(typeArry, numArray);
+      //文字分析
+      let sumdata = numArray.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...numArray)
+      let index2 = numArray.indexOf(index1)
+      let index3 = Math.min(...numArray)
+      let index4 = numArray.indexOf(index3)
+      if(sumdata==0){
+        this.typeResult = '截止到'+this.typeChartValue+"年,客户企业共有"+sumdata+"家"
+      }else{
+        this.typeResult = '截止到'+this.typeChartValue+"年,客户企业共有"+sumdata+"家,其中"+typeArry[index2]+"行业与我司商业合作最多，共有"+index1+"家;建议公司在稳固与"+typeArry[index2]+"公司合作关系的同时,多在别的行业耕耘,比如:"+typeArry[index4]
+      }
     },
     typeChart(typeArry, numArray) {
       var echarts = require("echarts");
@@ -210,7 +325,16 @@ export default {
     },
     capitalData(online, year) {
       const typeArry = ["小型企业", "中小型企业", "中大型企业", "大型企业"];
-      const onlineData = online;
+      let onlineData = online;
+      const yearFilter = year;
+      //过滤年份
+      onlineData = onlineData.map((item) => {
+        item.yearFilter = parseInt(item.start_date.split("-")[0]);
+        return item;
+      });
+      onlineData = onlineData.filter(
+        (item2) => item2.yearFilter <= parseInt(yearFilter)
+      );
       let numArray = [0, 0, 0, 0];
       onlineData.forEach((item) => {
         if (item.register_capital <= 500) {
@@ -226,8 +350,19 @@ export default {
           numArray[3]++;
         }
       });
-      // console.log(typeArry, numArray);
       this.capitalChart(typeArry, numArray);
+      //文字分析
+      let sumdata = numArray.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...numArray)
+      let index2 = numArray.indexOf(index1)
+      let bitNum = index1/sumdata*100
+      if(sumdata==0){
+        this.capitalResult = '截止到'+this.capitalChartValue+"年,客户企业共有"+sumdata+"家"
+      }else{
+        this.capitalResult = '截止到'+this.capitalChartValue+"年,客户企业共有"+sumdata+"家,其中"+typeArry[index2]+"占比例最多，共有"+index1+"家企业,占比达到了"+bitNum.toFixed(2)+"%,是公司的主要合作对象。建议公司巩固这"+typeArry[index2]+"的客户。"
+      }
     },
     capitalChart(typeArry, numArray) {
       var echarts = require("echarts");
@@ -300,6 +435,18 @@ export default {
         }
       });
       this.yearChart(typeArry, numArray);
+      //文字分析
+      let sumdata = numArray.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...numArray)
+      let index2 = numArray.indexOf(index1)
+      let bitNum = index1/sumdata*100
+      if(sumdata==0){
+        this.yearResult = "截止到2021年,客户企业共有"+sumdata+"家"
+      }else{
+        this.yearResult = "截止到2021年,客户企业共有"+sumdata+"家,其中经营"+typeArry[index2]+"的客户公司占比例最多，共有"+index1+"家企业,占比达到了"+bitNum.toFixed(2)+"%。"
+      }
     },
     yearChart(typeArry, numArray) {
       var echarts = require("echarts");
@@ -411,6 +558,23 @@ export default {
       });
       console.log(onlineYearCount, onlineNum, NewNum, overNum);
       this.numChart(month2, onlineNum, NewNum, overNum);
+      //文字分析
+      let sumdata1 = NewNum.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let sumdata2 = overNum.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...NewNum)
+      let index2 = NewNum.indexOf(index1)
+      this.numResult = this.numChartValue+"年,公司共新增加"+sumdata1+"个客户,流失了"+sumdata2+"个客户，其中"+this.numChartValue+"年"+month2[index2]+"增加的客户量最多。"
+      if(sumdata1>sumdata2){
+        this.numResult = this.numResult+"公司客户增加数量超过流失数量，需要继续保持。"
+      }else if(sumdata1>sumdata2){
+        this.numResult = this.numResult+"公司客户增加数量与流失数量持平，需要继续拓展新客户。"
+      }else{
+        this.numResult = this.numResult+"公司客户增加数量少于流失数量，需要注意。"
+      }
     },
     numChart(month, onlineNum, NewNum, overNum) {
       var echarts = require("echarts");
@@ -486,7 +650,8 @@ export default {
 <style scoped>
 .pageBox {
   width: 100%;
-  min-height: 300px;
+  /* min-height: 300px; */
+  height: 100%;
 }
 .box-card {
   width: 100%;
@@ -535,5 +700,20 @@ export default {
   min-width: 20px;
   padding: 4px 20px 4px 4px;
   margin-top: -1px;
+}
+.Chart-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.result-box {
+  margin-top: 2vh;
+  width: 30vw;
+  height: 18vw;
+  background: #545c641a;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1.2vw;
+  line-height: 3vw;
 }
 </style>

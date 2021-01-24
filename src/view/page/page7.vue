@@ -1,20 +1,20 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="名字" width="180"> </el-table-column>
-      <el-table-column prop="phone" label="手机号" width="180">
+    <el-table border :data="tableData" style="width: 100%">
+      <el-table-column align="center" prop="name" label="名字" width="180"> </el-table-column>
+      <el-table-column align="center" prop="phone" label="手机号" width="180">
       </el-table-column>
-      <el-table-column prop="role" label="角色">
+      <el-table-column align="center" prop="role" label="角色">
         <template slot-scope="scope">
           <span>{{ scope.row.role | roleChange }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="created_date" label="创建时间">
+      <el-table-column align="center" prop="created_date" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.created_date | timeStamp }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
             size="mini"

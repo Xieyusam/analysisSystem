@@ -23,7 +23,7 @@
         </el-form-item> -->
         <el-form-item label="选择文件">
           <!-- <span>文件</span> -->
-          <vue-xlsx-table @on-select-file="handleSelectedFile">选择文件</vue-xlsx-table>
+          <vue-xlsx-table @on-select-file="handleSelectedFile" class="xlsx-table">选择文件</vue-xlsx-table>
         </el-form-item>
         <el-form-item label="导入数量">
           <span>{{dataCount}}</span>
@@ -231,5 +231,9 @@ export default {
   height: 300px;
   width: 500px;
   margin-left: 20px;
+}
+.xlsx-button{
+  background-color:#545c64 ;
+  border: 1px solid #545c64;
 }
 </style>

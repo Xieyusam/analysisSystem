@@ -1,0 +1,142 @@
+{
+  "id": "2318504",
+  "name": "企业数据分析平台icon",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1133714",
+      "name": "分析",
+      "font_class": "icon1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1166408",
+      "name": "分析",
+      "font_class": "zonghefenxi",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "1263386",
+      "name": "员工入职",
+      "font_class": "yuangongruzhi",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "2525720",
+      "name": "人事",
+      "font_class": "fl-renshi",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "3947773",
+      "name": "分析",
+      "font_class": "fenxi",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "5121532",
+      "name": "部门",
+      "font_class": "bumen",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "5881141",
+      "name": "部门",
+      "font_class": "bumen1",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "6250266",
+      "name": "离职",
+      "font_class": "lizhi",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "6265394",
+      "name": "流程-入职管理",
+      "font_class": "flow-entry",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "6844448",
+      "name": "分析",
+      "font_class": "fenxi1",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "7171180",
+      "name": "人事信息管理",
+      "font_class": "HRrenshirenshiguanli",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "8949015",
+      "name": "在职",
+      "font_class": "zaizhi",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "9212030",
+      "name": "在职1",
+      "font_class": "zaizhi1",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "9869771",
+      "name": "39审批-人事-入职审批",
+      "font_class": "shenpi-renshi-ruzhishenpi",
+      "unicode": "e707",
+      "unicode_decimal": 59143
+    },
+    {
+      "icon_id": "11441218",
+      "name": "人事管理",
+      "font_class": "renshiguanli",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "11465014",
+      "name": "人事管理",
+      "font_class": "renshiguanli1",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "13221754",
+      "name": "分析",
+      "font_class": "icon-test",
+      "unicode": "e6b4",
+      "unicode_decimal": 59060
+    },
+    {
+      "icon_id": "15392657",
+      "name": "分析",
+      "font_class": "fenxi2",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "15983672",
+      "name": "分析",
+      "font_class": "fenxi3",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    }
+  ]
+}

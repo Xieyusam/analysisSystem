@@ -5,25 +5,54 @@
       <div class="card-child">部门总数<div class="num-card">{{ departmentCout }}</div></div>
       <div class="card-child">本月入职<div class="num-card">{{ nowMonthOnlineCout }}</div></div>
       <div class="card-child">本月离职<div class="num-card">{{ nowMonthOverCout }}</div></div>
+      <div class="card-child">本年入职<div class="num-card">{{ nowYearOnlineCout }}</div></div>
+      <div class="card-child">本年离职<div class="num-card">{{ nowYearOverCout }}</div></div>
     </div>
     <div class="line"><div class="line-title">各年龄段员工占比</div></div>
-    <div id="AgeChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{ageTextResult}}</div>
+    <div class="Chart-box">
+      <div id="AgeChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{ageTextResult}}</div>
+      </div>
+    </div>
     <div class="line"><div class="line-title">员工工资水平占比</div></div>
-    <div id="SalaryChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{SalaryTextResult}}</div>
+    <div class="Chart-box">
+      <div id="SalaryChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{SalaryTextResult}}</div>
+      </div>
+    </div>
     <div class="line"><div class="line-title">员工性别占比</div></div>
-    <div id="SexChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{SexTextResult}}</div>
+    <div class="Chart-box">
+      <div id="SexChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{SexTextResult}}</div>
+      </div>
+    </div>
+
     <div class="line"><div class="line-title">员工工龄占比</div></div>
-    <div id="WorkAgeChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{WorkAgeTextResult}}</div>
+    <div class="Chart-box">
+      <div id="WorkAgeChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{WorkAgeTextResult}}</div>
+      </div>
+    </div>
+
     <div class="line"><div class="line-title">员工户籍柱状图</div></div>
-    <div id="HomeChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{HomeTextResult}}</div>
+    <div class="Chart-box">
+      <div id="HomeChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{HomeTextResult}}</div>
+      </div>
+    </div>
+
     <div class="line"><div class="line-title">各部门员工数量柱状图</div></div>
-    <div id="DepartmentChart" style="width: 50vw; height: 17vw;"></div>
-    <div style="width: 50vw;">{{DepartmentTextResult}}</div>
+    <div class="Chart-box">
+      <div id="DepartmentChart" style="width: 50vw; height: 28vw;"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box">{{DepartmentTextResult}}</div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -46,7 +75,9 @@ export default {
       SexTextResult:'',// /性别分析结果
       WorkAgeTextResult:'',// 工龄分析结果
       HomeTextResult:'',// 户籍分析结果
-      DepartmentTextResult:''// 部门分析结果
+      DepartmentTextResult:'',// 部门分析结果
+      nowYearOnlineCout:"",
+      nowYearOverCout:""
     };
   },
   mounted() {
@@ -82,6 +113,8 @@ export default {
       this.nowMonthOverCout = getCurrentDateCont(overArr,'YYYY-mm');
       let OnlineArr = OnlineData.map((item) => parseInt(item.initday));
       this.nowMonthOnlineCout = getCurrentDateCont(OnlineArr,'YYYY-mm');
+      this.nowYearOnlineCout = getCurrentDateCont(OnlineArr, "YYYY");
+      this.nowYearOverCout = getCurrentDateCont(overArr, "YYYY");
     },
     workAgeAnalysis(data) {
       // 年龄数据
@@ -167,7 +200,7 @@ export default {
       // 文字分析
       let index1 = Math.max(...data)
       let index2 = data.indexOf(Math.max(...data))
-      this.WorkAgeTextResult = `数据分析：根据数据分析，公司中工龄处于${textData[index2]}的比较多，有${index1}人；${index2 >= 2 ? '整体分析，3年以上工龄的员工比较多，人员结构稳定':'整体分析，2年以下工龄的员工比较多，人员流动性较大，可能会出现员工流失现象'}`
+      this.WorkAgeTextResult = `根据数据分析，公司中工龄处于${textData[index2]}的比较多，有${index1}人；${index2 >= 2 ? '整体分析，3年以上工龄的员工比较多，人员结构稳定':'整体分析，2年以下工龄的员工比较多，人员流动性较大，可能会出现员工流失现象'}`
     },
     ageAnalysis(data) {
       // 年龄数据
@@ -255,7 +288,7 @@ export default {
       let index2 = data.indexOf(Math.max(...data))
       let peo1 = data[0] + data[1] + data[2]
       let peo2 = data[3] + data[4]
-      this.ageTextResult = '数据分析：在各年龄段中，公司 ' + textdata[index2] + 
+      this.ageTextResult = '在各年龄段中，公司 ' + textdata[index2] + 
       '年龄段的人数最多，有'+index1 +'人。以整体年龄来看39岁以下共'+peo1+'人，40岁以上共'+peo2+'人，'+(peo1 > peo2 ? '公司人员整体比较年轻充满活力' : '公司人员整体年龄较大')
     },
     SexAnalysis(data) {
@@ -309,7 +342,7 @@ export default {
           },
         ],
       });
-      this.SexTextResult = `数据分析：公司总人数${this.onlineCout}，其中男性${manCout}人，女性${womanCout}人，男女比例为${(manCout/womanCout).toFixed(2)}`
+      this.SexTextResult = `公司总人数${this.onlineCout}，其中男性${manCout}人，女性${womanCout}人，男女比例为${(manCout/womanCout).toFixed(2)}`
     },
     homeAnalysis(data) {
       // 户籍数据
@@ -350,7 +383,7 @@ export default {
       let maxindex = homeData.indexOf(maxVal)
       let minVal = Math.min(...homeData)
       let minindex = homeData.indexOf(minVal)
-      this.HomeTextResult = `数据分析：经过数据分析，公司员工分别来自${homeData.length}个地区，其中${home[maxindex]}地区的人数最多，有${maxVal}人，而${home[minindex]}地区的人数较少，只有${minVal}人`
+      this.HomeTextResult = `经过数据分析，公司员工分别来自${homeData.length}个地区，其中${home[maxindex]}地区的人数最多，有${maxVal}人，而${home[minindex]}地区的人数较少，只有${minVal}人`
     },
     departmentAnalysis(data) {
       // 部门数据
@@ -394,7 +427,7 @@ export default {
       let maxindex = departmentData.indexOf(maxVal)
       let minVal = Math.min(...departmentData)
       let minindex = departmentData.indexOf(minVal)
-      this.DepartmentTextResult = `数据分析：公司员工分别有${department.length}个部门，其中${department[maxindex]}的人数最多，有${maxVal}人，而${department[minindex]}的人数较少，只有${minVal}人`
+      this.DepartmentTextResult = `公司员工分别有${department.length}个部门，其中${department[maxindex]}的人数最多，有${maxVal}人，而${department[minindex]}的人数较少，只有${minVal}人`
     
     },
     salaryAnalysis(data) {
@@ -477,7 +510,7 @@ export default {
       let index2 = data.indexOf(Math.max(...data))
       let peo1 = data[0] + data[1] + data[2]
       let peo2 = data[3] + data[4]
-      this.SalaryTextResult = '数据分析：公司内工资水平处于 ' + textData[index2] + 
+      this.SalaryTextResult = '公司内工资水平处于 ' + textData[index2] + 
       '的人数最多，有'+index1 +'人。'
     
     },
@@ -487,8 +520,9 @@ export default {
 
 <style scoped>
 .pageBox {
-  width: 100%;
-  min-height: 300px;
+   width: 100%;
+  /* min-height: 300px; */
+  height: 100%;
 }
 .box-card {
   width: 100%;
@@ -537,5 +571,20 @@ export default {
   min-width: 20px;
   padding: 4px 20px 4px 4px;
   margin-top: -1px;
+}
+.Chart-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.result-box {
+  margin-top: 2vh;
+  width: 30vw;
+  height: 18vw;
+  background: #545c641a;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1.2vw;
+  line-height: 3vw;
 }
 </style>

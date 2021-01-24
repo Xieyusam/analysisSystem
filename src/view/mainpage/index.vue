@@ -4,15 +4,12 @@
       <el-header>
         <headerbox></headerbox>
       </el-header>
-      <el-container class="containerbox">
-        <!-- <el-aside width="160px">
-          <menubox></menubox>
-        </el-aside> -->
-        <el-container>
-          <el-main>
+      <el-container >
+
+          <el-main  id="containerbox">
             <router-view />
           </el-main>
-        </el-container>
+
       </el-container>
     </el-container>
   </div>
@@ -31,7 +28,15 @@ export default {
   data() {
     return {};
   },
-};
+  watch:{
+   '$route':function(to,from){
+// 　　　document.body.scrollTop = 0
+     document.getElementById('containerbox').scrollTop = 0
+   }},
+  methods:{
+    
+  }
+}
 </script>
 
 <style>
@@ -64,7 +69,8 @@ export default {
   /* line-height: 160px; */
   padding: 40px;
 }
-.containerbox {
+#containerbox {
   height: calc(100vh - 60px);
+  /* overflow: hidden; */
 }
 </style>

@@ -9,11 +9,26 @@
       <div class="card-child">年度订单总额<div class="num-card">{{ YearMoney }}</div></div>
     </div>
     <div class="line"><div class="line-title">各类产品年度交易数量与金额柱状图</div></div>
-    <div id="typeYearChart" style="width: 600px; height: 350px"></div>
+    <div class="Chart-box">
+      <div id="typeYearChart" style="width: 50vw; height: 28vw"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box"></div>
+      </div>
+    </div>
    <div class="line"><div class="line-title">单一产品的年度交易数量与金额柱状图</div></div>
-    <div id="nameYearChart" style="width: 600px; height: 350px"></div>
+    <div class="Chart-box">
+      <div id="nameYearChart" style="width: 50vw; height: 28vw"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box"></div>
+      </div>
+    </div>
     <div class="line"><div class="line-title">2020年每月产品订单与金额折线图</div></div>
-    <div id="YearOrderChart" style="width: 600px; height: 350px"></div>
+    <div class="Chart-box">
+      <div id="YearOrderChart" style="width: 50vw; height: 28vw"></div>
+      <div class="right-box" style="width: 40vw; height: 28vw">
+        <div class="result-box"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -438,7 +453,8 @@ export default {
 <style scoped>
 .pageBox {
   width: 100%;
-  min-height: 300px;
+  /* min-height: 300px; */
+  height: 100%;
 }
 .box-card {
   width: 100%;
@@ -487,5 +503,20 @@ export default {
   min-width: 20px;
   padding: 4px 20px 4px 4px;
   margin-top: -1px;
+}
+.Chart-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.result-box {
+  margin-top: 2vh;
+  width: 30vw;
+  height: 18vw;
+  background: #545c641a;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1.2vw;
+  line-height: 3vw;
 }
 </style>

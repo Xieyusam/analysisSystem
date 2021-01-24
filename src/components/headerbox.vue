@@ -1,6 +1,8 @@
 <template>
   <div id="headerbox">
-    <div class="sysTitle"><i class="el-icon-monitor"></i> 企业数据分析平台</div>
+    <div class="sysTitle">
+      <i class="iconfont iconfenxi2"></i> 企业数据分析平台
+    </div>
     <div>
       <!-- {{activeIndex}} -->
       <el-menu
@@ -20,14 +22,14 @@
           <el-menu-item index="page3">产品数据分析</el-menu-item>
           <el-menu-item index="page4">人事数据分析</el-menu-item>
         </el-submenu>
-        <el-submenu index="2">
+        <el-submenu  index="2">
           <template slot="title">数据管理</template>
-          <el-menu-item index="page5">外部数据导入</el-menu-item>
+          <el-menu-item v-if="role!=0" index="page5">外部数据导入</el-menu-item>
           <el-menu-item index="page6">数据导入管理</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">用户</template>
-          <el-menu-item index="page7">用户账号</el-menu-item>
+          <el-menu-item v-if="role!=0" index="page7">用户账号</el-menu-item>
           <el-menu-item index="page8">个人账号</el-menu-item>
           <el-menu-item index="exit">退出登录</el-menu-item>
         </el-submenu>
@@ -38,32 +40,37 @@
 </template>
 
 <script>
-import { cookieData } from "@/util/local";
+import { cookieData,localData } from "@/util/local";
 export default {
   name: "headerbox",
   data() {
     return {
       activeIndex: "page1",
+      role:0
     };
+  },
+  watch: {
+    $route: function (to, from) {
+      this.activeIndex = to.name
+    },
+  },
+  created(){
+      console.log(this.$route.name)
+      this.activeIndex = this.$route.name
+  },
+  mounted(){
+    this.role = localData("get", 'userinfo').role
   },
   methods: {
     goToPage(index) {
       if (index == "page1") {
         this.$router.push({ path: "/" });
-      } else if(index == "exit"){
-        this.exitToLogin()
+      } else if (index == "exit") {
+        this.exitToLogin();
       } else {
         this.$router.push({ path: "/" + index });
       }
     },
-    // goToPage(index) {
-    //   // this.$message({
-    //   //   showClose: true,
-    //   //   message: '恭喜你，这是一条成功消息',
-    //   //   type: 'success'
-    //   // });
-    //   this.$router.push({ path: "/page" + index });
-    // },
     exitToLogin() {
       cookieData("clean", "token"); // 清除token
       this.$message({

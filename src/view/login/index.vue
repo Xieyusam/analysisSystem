@@ -13,14 +13,14 @@
         <el-button @click="LoginByPhone" type="primary">登录</el-button>
       </div>
       <div class="child-box" v-if="isRegister">
-        <el-input placeholder="your username" v-model="user"> </el-input>
-        <el-input placeholder="your phone" v-model="phone"> </el-input>
-        <el-input placeholder="your password" show-password v-model="password">
+        <el-input placeholder="your username" v-model="Rusername"> </el-input>
+        <el-input placeholder="your phone" v-model="Rphone"> </el-input>
+        <el-input placeholder="your password" show-password v-model="Rpassword">
         </el-input>
         <el-button @click="isRegister = !isRegister" type="primary"
           >返回登录</el-button
         >
-        <el-button type="primary">确认注册</el-button>
+        <el-button type="primary" @click="Register">确认注册</el-button>
       </div>
     </div>
   </div>
@@ -28,14 +28,16 @@
 
 <script>
 import { cookieData,localData } from "@/util/local";
-import { UserLogin } from "@/api/user";
+import { UserLogin,UserRegister } from "@/api/user";
 export default {
   name: "login",
   data() {
     return {
-      user: "",
+      Rusername: "",
       password: "",
       phone: "",
+      Rphone:"",
+      Rpassword:"",
       isRegister: false,
     };
   },
@@ -57,7 +59,6 @@ export default {
         });
         return;
       }
-
       const parems = {
         phone: this.phone,
         password: this.password,
@@ -75,11 +76,50 @@ export default {
           }
         })
         .catch((err) => {});
-            //         cookieData("set", "token", '123', 1); // 将token 存在cookie,  1天后过期
-            // localData("set", 'userinfo' , '123')
-            // this.$router.push({path:"/"})
-
     },
+    Register(){
+      if (!this.Rusername) {
+        this.$message({
+          showClose: true,
+          message: "请填写登录手机",
+          type: "warning",
+        });
+        return;
+      }
+      if (!this.Rphone) {
+        this.$message({
+          showClose: true,
+          message: "请填写登录手机",
+          type: "warning",
+        });
+        return;
+      }
+      if (!this.Rpassword) {
+        this.$message({
+          showClose: true,
+          message: "请填写登录密码",
+          type: "warning",
+        });
+        return;
+      }
+      const parems = {
+        name: this.Rusername,
+        password: this.Rpassword,
+        phone:this.Rphone,
+        role:0
+      };
+      UserRegister(parems)
+        .then((res) => {
+          if (res.code == 200) {
+            this.$message({
+              message: "用户账号成功",
+              type: "success",
+            });
+            this.isRegister = false
+          }
+        })
+        .catch((err) => {});
+    }
   },
 };
 </script>
@@ -90,20 +130,21 @@ export default {
   height: 100vh;
   width: 100vw;
   text-align: center;
-  background-image: url("../../assets/背景图2.png");
+  background-image: url("../../assets/banner1.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   -moz-background-size: 100% 100%;
 }
 #login .login-box .title {
   font-size: 24px;
-  color: #b8bff2;
+  color: #070707;
   padding: 20px 0;
+  font-weight: bold;
 }
 #login .login-box {
   height: 350px;
   width: 400px;
-  background-color: #d5dee74d;
+  background-color: #545c64a4;
   margin: auto;
   border-radius: 20px;
   position: absolute;
