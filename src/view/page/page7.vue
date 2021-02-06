@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-table border :data="tableData" style="width: 100%">
-      <el-table-column align="center" prop="name" label="名字" width="180"> </el-table-column>
+      <el-table-column align="center" prop="name" label="名字" width="180">
+      </el-table-column>
       <el-table-column align="center" prop="phone" label="手机号" width="180">
       </el-table-column>
       <el-table-column align="center" prop="role" label="角色">
@@ -17,6 +18,14 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.id != userData.id && scope.row.role == 0"
+            size="mini"
+            type="info"
+            @click="reSetPwd(scope.$index, scope.row)"
+            >重置密码</el-button
+          >
+          <el-button
+            v-if="scope.row.id != userData.id && scope.row.role == 0"
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
@@ -29,12 +38,15 @@
 </template>
 
 <script>
-import { AllUser } from "@/api/user";
+import { AllUser, deleteUser, resetPassword } from "@/api/user";
 import { dateFormat } from "@/util/common";
+import { localData, cookieData } from "@/util/local";
+
 export default {
   data() {
     return {
       tableData: [],
+      userData: localData("get", "userinfo"),
     };
   },
   filters: {
@@ -57,6 +69,48 @@ export default {
           this.tableData = res.data.users;
         }
       });
+    },
+    reSetPwd(index, row) {
+      const params = {
+        id: row.id,
+      };
+      resetPassword(params)
+        .then((res) => {
+          if (res.code == 200) {
+            this.$message({
+              message: "用户" + row.name + "密码重置成功",
+              type: "success",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: err.data,
+            type: "warning",
+          });
+        });
+    },
+    handleDelete(index, row) {
+      console.log(row);
+      const params = {
+        id: row.id,
+      };
+      deleteUser(params)
+        .then((res) => {
+          if (res.code == 200) {
+            this.$message({
+              message: "删除用户" + row.name + "成功",
+              type: "success",
+            });
+            this.getAllUser();
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: err.data,
+            type: "warning",
+          });
+        });
     },
   },
 };

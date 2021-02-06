@@ -17,3 +17,21 @@ export function AllRecord() {
       });
   });
 }
+
+// 删除记录
+export function DelRecord(param) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/api/record/del",param)
+      .then(res => {
+        if (res.code == 200) {
+          resolve(res);
+        } else {
+          reject(res);
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}

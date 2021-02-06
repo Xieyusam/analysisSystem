@@ -173,6 +173,14 @@ export default {
           left: 10,
           data: textData,
         },
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
+        },
         series: [
           {
             // name: "访问来源",
@@ -259,6 +267,14 @@ export default {
           left: 10,
           data: textdata,
         },
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
+        },
         series: [
           {
             // name: "访问来源",
@@ -315,6 +331,14 @@ export default {
             "男","女"
           ],
         },
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
+        },
         series: [
           {
             // name: "访问来源",
@@ -367,6 +391,14 @@ export default {
         title: {
         },
         tooltip: {},
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
+        },
         xAxis: {
           data:home,
         },
@@ -409,6 +441,14 @@ export default {
       DepartmentChart.setOption({
         title: {
           // text: "ECharts 入门示例",
+        },
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
         },
         tooltip: {},
         xAxis: {
@@ -475,6 +515,14 @@ export default {
         tooltip: {
           trigger: "item",
           formatter: "{a} <br/>{b}: {c} ({d}%)",
+        },
+        toolbox: {
+          feature: {
+            // dataView: { show: true, readOnly: false },
+            // magicType: { show: true, type: ["pie", "bar"] },
+            // restore: { show: true },
+            saveAsImage: { show: true },
+          },
         },
         legend: {
           orient: "vertical",

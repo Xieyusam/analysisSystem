@@ -1,32 +1,107 @@
 <template>
   <div class="pageBox">
     <div class="box-card">
-      <div class="card-child">商品总数<div class="num-card">{{ productNameCount }}</div></div>
-      <div class="card-child">商品类别<div class="num-card">{{ productTypeCount }}</div></div>
-      <div class="card-child">本月产品订单<div class="num-card">{{ productsMonth }}</div></div>
-      <div class="card-child">年度产品订单<div class="num-card">{{ productsYear }}</div></div>
-      <div class="card-child">本月订单总额<div class="num-card">{{ MonthMoney }}</div></div>
-      <div class="card-child">年度订单总额<div class="num-card">{{ YearMoney }}</div></div>
+      <div class="card-child">
+        商品总数
+        <div class="num-card">{{ productNameCount }}</div>
+      </div>
+      <div class="card-child">
+        商品类别
+        <div class="num-card">{{ productTypeCount }}</div>
+      </div>
+      <div class="card-child">
+        本月产品订单
+        <div class="num-card">{{ productsMonth }}</div>
+      </div>
+      <div class="card-child">
+        年度产品订单
+        <div class="num-card">{{ productsYear }}</div>
+      </div>
+      <div class="card-child">
+        本月订单总额
+        <div class="num-card">{{ MonthMoney }}</div>
+      </div>
+      <div class="card-child">
+        年度订单总额
+        <div class="num-card">{{ YearMoney }}</div>
+      </div>
     </div>
-    <div class="line"><div class="line-title">各类产品年度交易数量与金额柱状图</div></div>
+    <div class="line">
+      <div class="line-title">{{typeYearChartValue}}年各类产品年度交易数量与金额柱状图</div>
+    </div>
     <div class="Chart-box">
       <div id="typeYearChart" style="width: 50vw; height: 28vw"></div>
       <div class="right-box" style="width: 40vw; height: 28vw">
-        <div class="result-box"></div>
+        <div class="filterBox">
+          <el-select
+            v-model="typeYearChartValue"
+            @change="typeYearChartChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{YearOrderChartResult}}</div>
       </div>
     </div>
-   <div class="line"><div class="line-title">单一产品的年度交易数量与金额柱状图</div></div>
+    <div class="line">
+      <div class="line-title">{{nameYearChartValue}}年单一产品的年度交易数量与金额柱状图</div>
+    </div>
     <div class="Chart-box">
       <div id="nameYearChart" style="width: 50vw; height: 28vw"></div>
       <div class="right-box" style="width: 40vw; height: 28vw">
-        <div class="result-box"></div>
+        <div class="filterBox">
+          <el-select
+            v-model="nameYearChartValue"
+            @change="nameYearChartrChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{nameYearChartResult}}</div>
       </div>
     </div>
-    <div class="line"><div class="line-title">2020年每月产品订单与金额折线图</div></div>
+    <div class="line">
+      <div class="line-title">{{YearOrderChartValue}}年每月产品订单与金额折线图</div>
+    </div>
     <div class="Chart-box">
       <div id="YearOrderChart" style="width: 50vw; height: 28vw"></div>
       <div class="right-box" style="width: 40vw; height: 28vw">
-        <div class="result-box"></div>
+        <div class="filterBox">
+          <el-select
+            v-model="YearOrderChartValue"
+            @change="YearOrderChartChange"
+            size="medium"
+            placeholder="请选择"
+            style="width: 30vw"
+          >
+            <el-option
+              v-for="item in Year"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="result-box">{{typeYearChartResult}}</div>
       </div>
     </div>
   </div>
@@ -68,6 +143,12 @@ export default {
         "2013",
         "2012",
       ],
+      YearOrderChartValue: "2021",
+      nameYearChartValue: "2021",
+      typeYearChartValue: "2021",
+      YearOrderChartResult: "正在分析...",
+      nameYearChartResult: "正在分析...",
+      typeYearChartResult: "正在分析...",
     };
   },
   mounted() {
@@ -99,14 +180,17 @@ export default {
           this.typeYearData(
             this.productDataTimeChange,
             this.productTypeArry,
-            this.Year[0]
+            this.typeYearChartValue
           );
           this.nameYearData(
             this.productDataTimeChange,
             this.productNameArry,
-            this.Year[0]
+            this.nameYearChartValue
           );
-          this.YearOrderData(this.productDataTimeChange, this.Year[0]);
+          this.YearOrderData(
+            this.productDataTimeChange,
+            this.YearOrderChartValue
+          );
         }
       });
     },
@@ -148,6 +232,24 @@ export default {
       });
       // console.log(NumArry, MoneyArry);
       this.typeYearChart(type, NumArry, MoneyArry);
+      //文字分析
+      let sumdata1 = NumArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let sumdata2 = MoneyArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...NumArry)
+      let index2 = NumArry.indexOf(index1)
+      let index3 = Math.max(...MoneyArry)
+      let index4 = NumArry.indexOf(index1)
+      this.YearOrderChartResult = ''
+      if(sumdata1 != 0){
+        this.YearOrderChartResult = this.YearOrderChartResult + this.typeYearChartValue + '年，公司各类产品年度交易总数量为'+sumdata1+',其中最畅销的一类产品是'+type[index2]+'类,共售出'+index1+'个，需要继续保持该类产品销量的同时，并推销别的产品。'
+      }
+      if(sumdata2 != 0){
+        this.YearOrderChartResult =this.YearOrderChartResult + this.typeYearChartValue + '年公司各类产品年度交易总金额为'+sumdata2+',其中'+type[index4]+'类产品售出金额最多,共'+index3+'元。公司可在该类产品上多挖掘新的产品。'
+      }
     },
     typeYearChart(type, NumArry, MoneyArry) {
       var echarts = require("echarts");
@@ -243,7 +345,24 @@ export default {
       });
       // console.log(NumArry, MoneyArry, "name");
       this.nameYearChart(name, NumArry, MoneyArry);
-      // this.typeYearChart()
+      //文字分析
+      let sumdata1 = NumArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let sumdata2 = MoneyArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let index1 = Math.max(...NumArry)
+      let index2 = NumArry.indexOf(index1)
+      let index3 = Math.max(...MoneyArry)
+      let index4 = NumArry.indexOf(index1)
+      this.nameYearChartResult = ''
+      if(sumdata1 != 0){
+        this.nameYearChartResult = this.nameYearChartResult + this.typeYearChartValue + '年，公司单一产品的年度交易总数量为'+sumdata1+',其中最畅销的一款产品是'+name[index2]+',共售出'+index1+'个。占总数的'+((index1/sumdata1)*100).toFixed(2)+'%。'
+      }
+      if(sumdata2 != 0){
+        this.nameYearChartResult = this.nameYearChartResult + this.typeYearChartValue + '年公司单一产品的年度交易总金额为'+sumdata2+',其中'+name[index4]+'售出金额最多,共'+index3+'元。'
+      }
     },
     nameYearChart(name, NumArry, MoneyArry) {
       var echarts = require("echarts");
@@ -265,7 +384,7 @@ export default {
         toolbox: {
           feature: {
             // dataView: { show: true, readOnly: false },
-            // magicType: { show: true, type: ["line", "bar"] },
+            // magicType: { show: true, type: ["bar","pie"] },
             // restore: { show: true },
             saveAsImage: { show: true },
           },
@@ -367,7 +486,35 @@ export default {
         MoneyArry.push(Money);
       });
       // console.log(NumArry, MoneyArry,'YearOrderData');
-      this.YearOrderChart(month2, NumArry, MoneyArry)
+      this.YearOrderChart(month2, NumArry, MoneyArry);
+      //文字分析
+      let sumdata1 = NumArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let avgdata1 = sumdata1 / 12
+      let mouthArr1 = []
+      NumArry.forEach((v,i,a)=>{
+        if(v>avgdata1){
+          mouthArr1.push(month2[i])
+        }
+      })
+      let sumdata2 = MoneyArry.reduce((sum,num)=>{
+        return sum + num
+      },0)
+      let avgdata2 = sumdata2 / 12
+      let mouthArr2 = []
+      MoneyArry.forEach((v,i,a)=>{
+        if(v>avgdata2){
+          mouthArr2.push(month2[i])
+        }
+      })
+      this.typeYearChartResult = ''
+      if(sumdata1!=0){
+        this.typeYearChartResult = this.typeYearChartResult +this.YearOrderChartValue+ '年，公司平均每月售出产品数量为'+avgdata1.toFixed(2)+'个，其中超过平均数的月份有'+mouthArr1.join('、')+",是产品销售的旺季。"
+      }
+      if(sumdata2!=0){
+        this.typeYearChartResult = this.typeYearChartResult +this.YearOrderChartValue + '年，公司平均每月售出产品金额为'+avgdata2.toFixed(2)+'个，其中超过平均金额的月份有'+mouthArr2.join('、')+"。"
+      }
     },
     YearOrderChart(month, NumArry, MoneyArry) {
       var echarts = require("echarts");
@@ -446,6 +593,23 @@ export default {
         ],
       });
     },
+    typeYearChartChange() {
+      this.typeYearData(
+        this.productDataTimeChange,
+        this.productTypeArry,
+        this.typeYearChartValue
+      );
+    },
+    nameYearChartrChange() {
+      this.nameYearData(
+        this.productDataTimeChange,
+        this.productNameArry,
+        this.nameYearChartValue
+      );
+    },
+    YearOrderChartChange() {
+      this.YearOrderData(this.productDataTimeChange, this.YearOrderChartValue);
+    },
   },
 };
 </script>
@@ -500,7 +664,7 @@ export default {
   /* border-left:1px solid #545c64 ; */
   background-color: #545c64;
   border-bottom-right-radius: 20px;
-  min-width: 20px;
+  min-width: 30px;
   padding: 4px 20px 4px 4px;
   margin-top: -1px;
 }

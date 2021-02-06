@@ -24,8 +24,8 @@
         </el-submenu>
         <el-submenu  index="2">
           <template slot="title">数据管理</template>
-          <el-menu-item v-if="role!=0" index="page5">外部数据导入</el-menu-item>
-          <el-menu-item index="page6">数据导入管理</el-menu-item>
+          <el-menu-item index="page5">外部数据导入</el-menu-item>
+          <el-menu-item v-if="role!=0" index="page6">数据导入管理</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">用户</template>

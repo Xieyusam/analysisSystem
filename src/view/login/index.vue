@@ -73,9 +73,19 @@ export default {
             cookieData("set", "token", res.data.token, 1); // 将token 存在cookie,  1天后过期
             localData("set", 'userinfo' , res.data.user)
             this.$router.push({path:"/"})
+          }else{
+            this.$message({
+              message: res.data,
+              type: "warning",
+            });
           }
         })
-        .catch((err) => {});
+        .catch((err) => {
+          this.$message({
+              message: err.data,
+              type: "warning",
+            });
+        });
     },
     Register(){
       if (!this.Rusername) {
