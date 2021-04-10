@@ -318,9 +318,10 @@ export default {
       });
     },
     delRecordById(index, row) {
+      let type = row.type === '客户' ? 0 : row.type === '产品' ? 1 : 2
       const param = {
         recordId: row.id,
-        type: row.type,
+        type: type,
       };
       DelRecord(param)
         .then((res) => {
